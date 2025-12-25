@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entebbe Club | 100 Years of Heritage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #041404; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .active-tab { background: #eab308; color: #041404; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .font-serif-vintage { font-family: 'Playfair Display', serif; }
+        .timeline-line::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, #eab308 0%, transparent 100%); }
+    </style>
+</head>
+<body class="text-white selection:bg-yellow-500 selection:text-black">
+
+    <nav class="fixed top-4 left-4 right-4 z-50 flex justify-between items-center glass p-3 rounded-full">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center text-yellow-400 font-bold border border-yellow-600/30">EC</div>
+            <div>
+                <h1 class="text-xs font-bold leading-none tracking-widest uppercase">Entebbe Club</h1>
+                <p class="text-[10px] text-yellow-500 font-semibold uppercase opacity-80">Est. 1902</p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="w-10 h-10 rounded-full glass flex items-center justify-center text-xs">🔍</button>
+            <button class="w-10 h-10 rounded-full glass flex items-center justify-center text-xs">🔔</button>
+        </div>
+    </nav>
+
+    <main id="app" class="pt-24 pb-32">
+        <header class="px-6 mb-12">
+            <h2 class="text-4xl font-serif-vintage italic mb-2">The History of <br><span class="text-yellow-500 not-italic font-sans font-extrabold uppercase text-5xl tracking-tighter">Golf in Uganda</span></h2>
+            <p class="text-gray-400 text-sm max-w-xs leading-relaxed">By Dr. George Bagambisa. A chronicle of resilience, from colonial hazards to military restoration.</p>
+            
+            <div class="flex gap-3 mt-8">
+                <button class="bg-yellow-500 text-green-950 px-8 py-4 rounded-3xl font-extrabold text-sm uppercase tracking-tight shadow-xl">Start Reading</button>
+                <button class="glass px-6 py-4 rounded-3xl font-bold text-sm">🏛️ Archive</button>
+            </div>
+        </header>
+
+        <section class="mb-12">
+            <div class="flex justify-between items-center px-6 mb-4">
+                <h4 class="text-lg font-bold">Heritage Stories</h4>
+                <span class="text-yellow-500 text-xs font-bold uppercase tracking-widest">Swipe</span>
+            </div>
+            <div id="story-scroll" class="flex gap-5 overflow-x-auto px-6 pb-6 no-scrollbar">
+                </div>
+        </section>
+
+        <section class="px-6 mb-12">
+            <div class="glass rounded-[2rem] p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl">📜</div>
+                <h3 class="text-xl font-bold mb-8 text-yellow-500 uppercase tracking-widest">100 Year Timeline</h3>
+                <div id="timeline-container" class="space-y-10 relative ml-2">
+                    </div>
+            </div>
+        </section>
+
+        <section class="px-6 mb-12">
+            <h4 class="text-lg font-bold mb-6">Hall of Fame</h4>
+            <div id="hall-of-fame" class="grid grid-cols-1 gap-3">
+                </div>
+        </section>
+    </main>
+
+    <nav class="fixed bottom-6 left-6 right-6 z-50 glass rounded-[2.5rem] p-4 flex justify-around items-center">
+        <button class="active-tab p-4 rounded-full transition-transform active:scale-95"><span class="text-xl">🏠</span></button>
+        <button class="p-4 text-gray-500"><span class="text-xl">⛳</span></button>
+        <div class="h-8 w-[1px] bg-white/10"></div>
+        <button class="p-4 text-gray-500"><span class="text-xl">🏆</span></button>
+        <button class="p-4 text-gray-500"><span class="text-xl">👤</span></button>
+    </nav>
+
+    <script>
+        /**
+         * DATA LAYER
+         * Integrated from 1902-2002 records and restoration documents.
+         */
+        const stories = [
+            {
+                title: "Uganda's First Car",
+                category: "INNOVATION",
+                icon: "🚗",
+                snippet: "An ALBION canvas-hooded 4-seater imported by Governor Sir Hesketh Bell."
+            },
+            {
+                title: "The Tsetse Fly War",
+                category: "HAZARDS",
+                icon: "🦟",
+                snippet: "Marshy soil and sleeping sickness claimed 200,000 lives during construction."
+            },
+            {
+                title: "The 1972 Takeover",
+                category: "RESILIENCE",
+                icon: "🎖️",
+                [cite_start]snippet: "Military forces occupied the club, converting it into an Air Force Staff Mess [cite: 1-3]."
+            }
+        ];
+
+        const timeline = [
+            { year: "1894", event: "Seat of Government", detail: "Entebbe becomes the British seat from when Uganda was declared a Protectorate." },
+            { year: "1902", event: "Founding", detail: "Club formulated after mapping by noted naturalist Sir Harry Johnston." },
+            { year: "1904", event: "Grand Opening", detail: "Col. Sir James Hayes Sadler officially opens the club with 35 members." },
+            { year: "1972", event: "Military Occupation", detail: "Uganda Army besieges the establishment, abusing practically all items." },
+            [cite_start]{ year: "1974", event: "The Restoration", detail: "Members identify fairways by memory and clear the bush using council machines [cite: 18-25]." }
+        ];
+
+        const champions = [
+            { name: "M. P. Tennant", title: "EA Open Champion 1925 (+2 Handicap)" },
+            { name: "Sir Philip Mitchell", title: "Scratch Golfer & Governor" },
+            { name: "John D. Rankine", title: "Uganda Amateur Open Winner '35, '36" },
+            { name: "Mrs. Jean Short", title: "Semi-Finalist EA Ladies Open" }
+        ];
+
+        /**
+         * RENDER LOGIC
+         */
+        const render = () => {
+            // 1. Render Stories (Horizontal Scroll)
+            const storyScroll = document.getElementById('story-scroll');
+            stories.forEach(s => {
+                storyScroll.innerHTML += `
+                    <div class="min-w-[260px] glass rounded-[2.5rem] p-6 flex flex-col justify-between h-72 border-white/5 relative overflow-hidden">
+                        <div class="absolute -top-4 -right-4 text-7xl opacity-5">${s.icon}</div>
+                        <div>
+                            <span class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest">${s.category}</span>
+                            <h5 class="text-xl font-bold mt-2 leading-tight">${s.title}</h5>
+                        </div>
+                        <p class="text-xs text-gray-400 leading-relaxed line-clamp-3">${s.snippet}</p>
+                        <button class="mt-4 bg-white/10 w-full py-2 rounded-2xl text-[10px] font-bold uppercase hover:bg-yellow-500 hover:text-black transition">Read More</button>
+                    </div>
+                `;
+            });
+
+            // 2. Render Timeline
+            const timelineCont = document.getElementById('timeline-container');
+            timeline.forEach(t => {
+                timelineCont.innerHTML += `
+                    <div class="relative pl-8 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-full before:bg-white/5">
+                        <div class="absolute left-[-4px] top-2 w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <span class="text-[10px] font-extrabold text-yellow-500 mb-1 block">${t.year}</span>
+                        <h6 class="font-bold text-sm mb-1 text-white uppercase tracking-tight">${t.event}</h6>
+                        <p class="text-xs text-gray-500 leading-relaxed">${t.detail}</p>
+                    </div>
+                `;
+            });
+
+            // 3. Render Hall of Fame
+            const hofCont = document.getElementById('hall-of-fame');
+            champions.forEach(c => {
+                hofCont.innerHTML += `
+                    <div class="glass p-4 rounded-2xl flex justify-between items-center border-l-4 border-yellow-500">
+                        <div>
+                            <p class="font-bold text-sm">${c.name}</p>
+                            <p class="text-[10px] text-gray-500">${c.title}</p>
+                        </div>
+                        <span class="text-yellow-500 text-lg">🏆</span>
+                    </div>
+                `;
+            });
+        };
+
+        render();
+    </script>
+</body>
+</html>
